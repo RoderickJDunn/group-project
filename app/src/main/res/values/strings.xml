@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Integration</string>
+
+    <string name="hello_world1">Hello One World!</string>
+    <string name="hello_world2">Hello Two World!</string>
+    <string name="hello_world3">Hello Three World!</string>
+    <string name="hello_world4">Hello Four World!</string>
+    <string name="action_settings">Settings</string>
+</resources>
