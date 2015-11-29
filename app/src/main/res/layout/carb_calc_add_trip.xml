@@ -1,8 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView
+    android:layout_height="match_parent"
+    android:id="@+id/add_tip_frag"
+    android:layout_width="match_parent"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
 
-    <TextView android:text="fragment_add_trip" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        >
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="4"
+            android:rowCount="1"
+            >
+            <TextView
+                android:text="Enter Trip Information"
+                android:textSize="25dip"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:layout_columnSpan="3"
+                android:textColor="@color/highlighted_text_material_light"
+            />
+            <Button
+                android:id="@+id/done_button_add_trip"
+                android:layout_columnSpan="1"
+                android:layout_gravity="right"
+                android:text="@string/done_button"
+                />
+        </GridLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/category_input"
+            android:hint="Trip Category (eg. Business)"
+            style="@style/addTripStyle"
+            />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/vehicle_input"
+            android:hint="Vehicle Type"
+            style="@style/addTripStyle"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/distance_input"
+            android:hint="Distance (miles)"
+            android:inputType="numberDecimal"
+            style="@style/addTripStyle"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                android:textSize="20dp"
+                android:textStyle="italic"
+                android:text="Total CO2:"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/carbon_field"
+                android:editable="false"
+                android:text=""
+                style="@style/addTripStyle"
+                android:backgroundTint="#a1c4f7"/>
+
+        </LinearLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/date_input"
+            android:hint="Date"
+            style="@style/addTripStyle"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/note_input"
+            android:hint="Note"
+            style="@style/addTripStyle"
+            android:textAlignment="textStart"
+            android:gravity="top|left"
+            android:minHeight="60dip" />
+    </LinearLayout>
+</ScrollView>

@@ -10,7 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class CarbCalculatorActivity extends ActionBarActivity implements CarbCalcListFragment.OnTripSelectedListener{
+public class CarbCalculatorActivity extends ActionBarActivity
+        implements CarbCalcListFragment.OnTripSelectedListener, CarbCalcAddTripFragment.OnTapDoneListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class CarbCalculatorActivity extends ActionBarActivity implements CarbCal
                 go(MainActivity4.class);
                 break;
             case 5:
-                addTrip();
+                openAddTrip();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -86,14 +87,16 @@ public class CarbCalculatorActivity extends ActionBarActivity implements CarbCal
         startActivity(intent);
     }
 
-    private void addTrip() {
+    private void openAddTrip() {
         Log.d("Check", "Adding trip");
         // fragment transaction (input trip info)
         // Create new fragment and transaction
+
+
         Fragment addTripFrag = new CarbCalcAddTripFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.carb_calc_activity, addTripFrag);
+        transaction.replace(R.id.carb_calc_list_frag, addTripFrag);
         transaction.addToBackStack(null);
 
 
@@ -104,5 +107,16 @@ public class CarbCalculatorActivity extends ActionBarActivity implements CarbCal
     @Override
     public void onTripSelected(long id) {
 
+    }
+
+    @Override
+    public void onTapDone() {
+        // Create an instance of ExampleFragment
+        CarbCalcListFragment listFragment = new CarbCalcListFragment();
+
+        //  listFragment.setArguments(getIntent().getExtras());
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.carb_calc_list_frag, listFragment).commit();
     }
 }

@@ -5,4 +5,17 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="addTripStyle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:padding">@dimen/abc_text_size_body_2_material</item>
+        <item name="android:layout_margin">5dip</item>
+        <item name="android:background">@drawable/colored_edit_text</item>
+
+        <!--<item name="android:color">@color/abc_primary_text_material_light</item>-->
+        <item name="android:colorBackground">@color/abc_primary_text_material_light</item>
+
+    </style>
+
 </resources>

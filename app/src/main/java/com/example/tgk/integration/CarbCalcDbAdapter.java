@@ -140,6 +140,11 @@ public class CarbCalcDbAdapter {
         return mDb.insert(TABLE_NAME_TRIP, null, initialValues);
     }
 
+    public void removeTrip(long id) {
+        // don't know if this works yet
+        mDb.delete(TABLE_NAME_TRIP, "_id = " + id, null);
+    }
+
     public boolean deleteAllArticles() {
         int doneDelete = 0;
         doneDelete = mDb.delete(TABLE_NAME_TRIP, null , null);
