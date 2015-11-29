@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 /**
  * Created by Roderick on 2015-11-27.
@@ -20,7 +23,11 @@ public class CarbCalcAddTripFragment extends Fragment {
     OnTapDoneListener mCallback;
     CarbCalcDbAdapter dbHelper;
     SimpleCursorAdapter dataAdapter;
-
+    private final static double CAR_CARBON_FACTOR = 0.00025;
+    private final static double PLANE_CARBON_FACTOR = 0.00007436;
+    private final static double MOTORBIKE_CARBON_FACTOR = 0.000195;
+    private final static double BUS_CARBON_FACTOR = 0.000175;
+    private final static double TRAIN_CARBON_FACTOR = 0.00002;
 
     public interface OnTapDoneListener {
         /** Called by HeadlinesFragment when a list item is selected */
@@ -40,14 +47,8 @@ public class CarbCalcAddTripFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inputTripInfoView = inflater.inflate(R.layout.carb_calc_add_trip, container, false);
-        final Button doneButton = (Button)inputTripInfoView.findViewById(R.id.done_button_add_trip);
-        doneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                storeInDatabase();
-            }
-        });
 
+        registerListeners(inputTripInfoView);
         Spinner vehicleSpinner = (Spinner)inputTripInfoView.findViewById(R.id.vehicle_input);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(
                 this.getActivity(), R.array.vehicles_array, android.R.layout.simple_spinner_item);
@@ -56,6 +57,63 @@ public class CarbCalcAddTripFragment extends Fragment {
         vehicleSpinner.setAdapter(spinnerAdapter);
         // Inflate the layout for this fragment
         return inputTripInfoView;
+    }
+
+    private void registerListeners(final View inputTripInfoView) {
+
+        final Button doneButton = (Button)inputTripInfoView.findViewById(R.id.done_button_add_trip);
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                storeInDatabase();
+            }
+        });
+
+        final EditText distanceInput = (EditText)inputTripInfoView.findViewById(R.id.distance_input);
+        final TextView carbonTotalView = (TextView)inputTripInfoView.findViewById(R.id.carbon_field);
+
+        distanceInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String vehicleType = ((Spinner)inputTripInfoView.findViewById(R.id.vehicle_input))
+                        .getSelectedItem().toString();
+                String distanceString = s.toString();
+                if (distanceString != null && !distanceString.trim().equals("")) {
+                    double distance = Double.parseDouble(s.toString());
+                    switch (vehicleType) {
+                        case "Car":
+                            carbonTotalView.setText(String.valueOf(distance*CAR_CARBON_FACTOR));
+                            break;
+                        case "Plane":
+                            carbonTotalView.setText(String.valueOf(distance*PLANE_CARBON_FACTOR));
+                            break;
+                        case "Motorbike":
+                            carbonTotalView.setText(String.valueOf(distance*MOTORBIKE_CARBON_FACTOR));
+                            break;
+                        case "Bus":
+                            carbonTotalView.setText(String.valueOf(distance*BUS_CARBON_FACTOR));
+                            break;
+                        case "Train":
+                            carbonTotalView.setText(String.valueOf(distance*TRAIN_CARBON_FACTOR));
+                            break;
+                    }
+                }
+                else {
+                    carbonTotalView.setText("");
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     public void onAttach(Activity activity) {

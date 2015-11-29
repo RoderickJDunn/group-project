@@ -14,7 +14,7 @@ public class CarbCalcDbAdapter {
     public static final String DATABASE_NAME = "Trips";
 
     private static final String TEXT_TYPE = " TEXT";
-    private static final String INT_TYPE = " INTEGER";
+    private static final String REAL_TYPE = " REAL";
 
     private static final String TAG = "CarbCalcDbAdapter";
     private DatabaseHelper mDbHelper;
@@ -36,7 +36,7 @@ public class CarbCalcDbAdapter {
             "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_TRIP + " (" +
                     KEY_TRIP_ID + " INTEGER PRIMARY KEY autoincrement, " +
                     KEY_CATEGORY + TEXT_TYPE + ", "+ KEY_VEHICLE_TYPE  + TEXT_TYPE + ", " +
-                    KEY_DISTANCE + TEXT_TYPE + ", " + KEY_DATE + TEXT_TYPE + ", " +
+                    KEY_DISTANCE + REAL_TYPE + ", " + KEY_DATE + TEXT_TYPE + ", " +
                     KEY_NOTE + TEXT_TYPE + ", " + KEY_SUMMARY + TEXT_TYPE +  // Any other options for the CREATE command
                     " );";
 
@@ -126,7 +126,7 @@ public class CarbCalcDbAdapter {
         return mCursor;
     }
 
-    public long insertTrip(String category, String vehicleType, long distance, String date,
+    public long insertTrip(String category, String vehicleType, double distance, String date,
                            String note, String summary) {
 
         ContentValues initialValues = new ContentValues();
