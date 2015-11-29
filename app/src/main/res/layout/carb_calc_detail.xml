@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</LinearLayout>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:rowCount="10"
+    android:columnCount="3"
+    android:background="#baffcf"
+    android:useDefaultMargins="true"
+    >
+
+    <TextView
+        android:id="@+id/trip_title_info"
+        android:text="Name of Trip"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="15dip"
+        android:layout_rowSpan="2"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_row="0"
+        android:layout_column="0"
+
+        />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="78dp"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/button2"
+        android:layout_row="1"
+        android:layout_column="1" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:id="@+id/button"
+        android:layout_row="1"
+        android:layout_column="2" />
+
+    <TextView
+        android:id="@+id/category_info"
+        style="@style/tripDetailStyle"
+        android:text="Test testtest test test test"
+        android:layout_row="3"
+        android:layout_column="0"
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill_horizontal" />
+
+    <TextView
+        android:id="@+id/vehicletype_info"
+        style="@style/tripDetailStyle"
+        android:text="Test testtest test test test"
+        android:layout_row="4"
+        android:layout_column="0"
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill_horizontal" />
+
+    <TextView
+        android:id="@+id/distance_info"
+        style="@style/tripDetailStyle"
+        android:text="Test testtest test test test"
+        android:layout_row="5"
+        android:layout_column="0"
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill_horizontal" />
+
+    <TextView
+        android:id="@+id/carbon_info"
+        style="@style/tripDetailStyle"
+        android:text="Test testtest test test test"
+        android:layout_row="6"
+        android:layout_column="0"
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill_horizontal" />
+
+    <TextView
+        android:id="@+id/date_info"
+        style="@style/tripDetailStyle"
+        android:text="Test testtest test test test"
+        android:layout_row="7"
+        android:layout_column="0"
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill_horizontal"/>
+
+    <TextView
+        android:id="@+id/note_info"
+        style="@style/tripDetailStyle"
+        android:text="Test testtest test test test"
+        android:layout_row="8"
+        android:layout_column="0"
+        android:layout_columnSpan="3"
+        android:layout_gravity="fill_horizontal"/>
+</GridLayout>

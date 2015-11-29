@@ -16,6 +16,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
+import java.util.logging.SimpleFormatter;
+
 /**
  * Created by Roderick on 2015-11-27.
  */
@@ -74,9 +79,7 @@ public class CarbCalcAddTripFragment extends Fragment {
 
         distanceInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -106,13 +109,10 @@ public class CarbCalcAddTripFragment extends Fragment {
                 else {
                     carbonTotalView.setText("");
                 }
-
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) {}
         });
     }
 
@@ -131,14 +131,17 @@ public class CarbCalcAddTripFragment extends Fragment {
 
     public void storeInDatabase() {
         // get text from each of the input fields in the AddTrip fragment view
+
         String category = ((EditText)getActivity().findViewById(R.id.category_input)).getText().toString();
         String vehicleType = ((Spinner)getActivity().findViewById(R.id.vehicle_input)).getSelectedItem().toString();
         String distanceString = ((EditText)getActivity().findViewById(R.id.distance_input)).getText().toString();
-
+        double distance = Double.parseDouble(distanceString);
+        String cO2String = ((TextView)getActivity().findViewById(R.id.carbon_field)).getText().toString();
+        double co2Amount = Double.parseDouble(cO2String);
         String date = ((EditText)getActivity().findViewById(R.id.date_input)).getText().toString();
         String note = ((EditText)getActivity().findViewById(R.id.note_input)).getText().toString();
 
-        dbHelper.insertTrip(category, vehicleType, 1, date, note, "");
+        dbHelper.insertTrip(category, vehicleType, distance, co2Amount, date, note, "");
 
         mCallback.onTapDone();
 

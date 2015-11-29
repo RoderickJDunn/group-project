@@ -27,6 +27,7 @@ public class CarbCalcDbAdapter {
     public static final String KEY_CATEGORY = "Category";
     public static final String KEY_VEHICLE_TYPE = "VehicleType";
     public static final String KEY_DISTANCE = "Distance";
+    public static final String KEY_CO2 = "Carbon";
     public static final String KEY_DATE = "Date";
     public static final String KEY_NOTE = "Note";
     public static final String KEY_SUMMARY = "Summary";
@@ -36,9 +37,8 @@ public class CarbCalcDbAdapter {
             "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_TRIP + " (" +
                     KEY_TRIP_ID + " INTEGER PRIMARY KEY autoincrement, " +
                     KEY_CATEGORY + TEXT_TYPE + ", "+ KEY_VEHICLE_TYPE  + TEXT_TYPE + ", " +
-                    KEY_DISTANCE + REAL_TYPE + ", " + KEY_DATE + TEXT_TYPE + ", " +
-                    KEY_NOTE + TEXT_TYPE + ", " + KEY_SUMMARY + TEXT_TYPE +  // Any other options for the CREATE command
-                    " );";
+                    KEY_DISTANCE + REAL_TYPE + ", " + KEY_CO2 + REAL_TYPE + ", " + KEY_DATE + TEXT_TYPE + ", " +
+                    KEY_NOTE + TEXT_TYPE + ", " + KEY_SUMMARY + TEXT_TYPE + " );";
 
 
     private static final String SQL_DELETE_ENTRIES =
@@ -95,14 +95,14 @@ public class CarbCalcDbAdapter {
         Cursor mCursor = null;
         if (id < 0)  {
             mCursor = mDb.query(TABLE_NAME_TRIP, new String[] {KEY_TRIP_ID,
-                            KEY_CATEGORY, KEY_VEHICLE_TYPE, KEY_DISTANCE, KEY_DATE,
+                            KEY_CATEGORY, KEY_VEHICLE_TYPE, KEY_DISTANCE, KEY_CO2, KEY_DATE,
                             KEY_NOTE, KEY_SUMMARY},
                     null, null, null, null, null);
 
         }
         else {
             mCursor = mDb.query(true, TABLE_NAME_TRIP, new String[] {KEY_TRIP_ID,
-                            KEY_CATEGORY, KEY_VEHICLE_TYPE, KEY_DISTANCE, KEY_DATE,
+                            KEY_CATEGORY, KEY_VEHICLE_TYPE, KEY_DISTANCE, KEY_CO2, KEY_DATE,
                             KEY_NOTE, KEY_SUMMARY},
                     KEY_TRIP_ID + " = " + id, null, null, null, null, null);
         }
@@ -116,7 +116,7 @@ public class CarbCalcDbAdapter {
     public Cursor fetchAllTrips() {
 
         Cursor mCursor = mDb.query(TABLE_NAME_TRIP, new String[] {KEY_TRIP_ID,
-                        KEY_CATEGORY, KEY_VEHICLE_TYPE, KEY_DISTANCE, KEY_DATE,
+                        KEY_CATEGORY, KEY_VEHICLE_TYPE, KEY_DISTANCE, KEY_CO2, KEY_DATE,
                         KEY_NOTE, KEY_SUMMARY},
                 null, null, null, null, null);
 
@@ -126,13 +126,14 @@ public class CarbCalcDbAdapter {
         return mCursor;
     }
 
-    public long insertTrip(String category, String vehicleType, double distance, String date,
-                           String note, String summary) {
+    public long insertTrip(String category, String vehicleType, double distance, double co2,
+                           String date, String note, String summary) {
 
         ContentValues initialValues = new ContentValues();
         initialValues.put(KEY_CATEGORY, category);
         initialValues.put(KEY_VEHICLE_TYPE, vehicleType);
         initialValues.put(KEY_DISTANCE, distance);
+        initialValues.put(KEY_CO2, co2);
         initialValues.put(KEY_DATE, date);
         initialValues.put(KEY_NOTE, note);
         initialValues.put(KEY_SUMMARY, summary);

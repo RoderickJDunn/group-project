@@ -1,5 +1,6 @@
 package com.example.tgk.integration;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.ListFragment;
 import android.database.Cursor;
@@ -9,6 +10,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 /**
  * Created by Roderick on 2015-11-27.
@@ -17,6 +19,7 @@ public class CarbCalcListFragment extends ListFragment {
 
     CarbCalcDbAdapter dbHelper;
     SimpleCursorAdapter dataAdapter;
+    private OnTripSelectedListener mCallback;
 
     public interface OnTripSelectedListener {
         /** Called by HeadlinesFragment when a list item is selected */
@@ -40,11 +43,6 @@ public class CarbCalcListFragment extends ListFragment {
          displayListView();
         // connect to DB in background thread
     }
-
-    /*@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.simple_text_view1, container, false);
-    }*/
 
     private void displayListView() {
 
@@ -71,5 +69,27 @@ public class CarbCalcListFragment extends ListFragment {
                 0);
 
         setListAdapter(dataAdapter);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception.
+        try {
+            mCallback = (OnTripSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnTripSelectedListener");
+        }
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        mCallback.onTripSelected(id);
+        getListView().setItemChecked(position, true);
+
     }
 }

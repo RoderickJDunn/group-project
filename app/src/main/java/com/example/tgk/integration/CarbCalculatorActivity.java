@@ -106,7 +106,7 @@ public class CarbCalculatorActivity extends ActionBarActivity
 
     @Override
     public void onTripSelected(long id) {
-
+        CarbCalcDetailFragment detailFragment = new CarbCalcDetailFragment();
     }
 
     @Override
