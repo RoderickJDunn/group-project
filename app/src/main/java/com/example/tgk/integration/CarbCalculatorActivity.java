@@ -13,13 +13,15 @@ import android.view.MenuItem;
 public class CarbCalculatorActivity extends ActionBarActivity
         implements CarbCalcListFragment.OnTripSelectedListener, CarbCalcAddTripFragment.OnTapDoneListener{
 
+    public static final String TITLE = "CO2 Calculator";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.carb_calc_activity);
-
+        setTitle(TITLE);
         // Check whether the activity is using the layout version with
-        // the fragment_container FrameLayout. If so, we must add the first fragment
+        // the fragment_container for small screens. If so, we must add the first fragment
         if (findViewById(R.id.carb_calc_activity) != null) {
 
             // However, if we're being restored from a previous state,
@@ -35,7 +37,7 @@ public class CarbCalculatorActivity extends ActionBarActivity
           //  listFragment.setArguments(getIntent().getExtras());
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-            transaction.add(R.id.carb_calc_activity, listFragment).commit();
+            transaction.add(R.id.carb_calc_list_view, listFragment).commit();
             // In case this activity was started with special instructions from an Intent,
             // pass the Intent's extras to the fragment as arguments
 
@@ -43,6 +45,12 @@ public class CarbCalculatorActivity extends ActionBarActivity
         }
         else {
 
+            CarbCalcDetailFragment detailFragment = new CarbCalcDetailFragment();
+
+            //  listFragment.setArguments(getIntent().getExtras());
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+            transaction.add(R.id.details_add_pane, detailFragment).commit();
         }
     }
 
@@ -52,6 +60,7 @@ public class CarbCalculatorActivity extends ActionBarActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         menu.add(1, 5, 5, "Add Trip");
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
@@ -97,13 +106,20 @@ public class CarbCalculatorActivity extends ActionBarActivity
 
         Fragment detailFrag = getFragmentManager().findFragmentById(R.id.details_add_pane);
         if (detailFrag != null) {
+            Fragment addTripFrag = new CarbCalcAddTripFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
+            transaction.replace(R.id.details_add_pane, addTripFrag);
+            transaction.addToBackStack(null);
+
+
+            transaction.commit();
         }
         else {
             Fragment addTripFrag = new CarbCalcAddTripFragment();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-            transaction.replace(R.id.carb_calc_activity, addTripFrag);
+            transaction.replace(R.id.carb_calc_list_view, addTripFrag);
             transaction.addToBackStack(null);
 
 
@@ -123,11 +139,30 @@ public class CarbCalculatorActivity extends ActionBarActivity
     @Override
     public void onTapDone() {
         // Create an instance of ExampleFragment
-        CarbCalcListFragment listFragment = new CarbCalcListFragment();
+        Fragment listFragment = getFragmentManager().findFragmentById(R.id.list_pane);
 
-        //  listFragment.setArguments(getIntent().getExtras());
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        if (listFragment != null) {
+            //in two-pane view
+            CarbCalcDetailFragment detailFragment = new CarbCalcDetailFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.carb_calc_activity, listFragment).commit();
+            transaction.replace(R.id.details_add_pane, detailFragment).commit();
+            notifyListChanged();
+            Intent intent = getIntent();
+            startActivity(intent);
+        }
+        else {
+            // in single-pane view
+            // listFragment.setArguments(getIntent().getExtras());
+            CarbCalcListFragment newListFragment = new CarbCalcListFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+            transaction.replace(R.id.carb_calc_list_view, newListFragment).commit();
+        }
+    }
+
+    @Override
+    public void notifyListChanged() {
+
     }
 }

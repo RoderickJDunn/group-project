@@ -42,6 +42,7 @@ public class TipCalculatorActivity extends ActionBarActivity {
                 go(MainActivity2.class);
                 break;
             case R.id.carb_calc:
+
                 go(CarbCalculatorActivity.class);
                 break;
             case R.id.contacts:

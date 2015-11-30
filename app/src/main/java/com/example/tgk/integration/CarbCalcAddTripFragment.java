@@ -135,9 +135,14 @@ public class CarbCalcAddTripFragment extends Fragment {
         String category = ((EditText)getActivity().findViewById(R.id.category_input)).getText().toString();
         String vehicleType = ((Spinner)getActivity().findViewById(R.id.vehicle_input)).getSelectedItem().toString();
         String distanceString = ((EditText)getActivity().findViewById(R.id.distance_input)).getText().toString();
-        double distance = Double.parseDouble(distanceString);
         String cO2String = ((TextView)getActivity().findViewById(R.id.carbon_field)).getText().toString();
-        double co2Amount = Double.parseDouble(cO2String);
+        double distance=0;
+        double co2Amount=0;
+        if (distanceString != null && !distanceString.trim().equals("")) {
+            distance = Double.parseDouble(distanceString);
+            co2Amount = Double.parseDouble(cO2String);
+        }
+
         String date = ((EditText)getActivity().findViewById(R.id.date_input)).getText().toString();
         String note = ((EditText)getActivity().findViewById(R.id.note_input)).getText().toString();
 

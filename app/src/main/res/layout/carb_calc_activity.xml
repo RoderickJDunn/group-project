@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/carb_calc_activity"
+<LinearLayout
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/carb_calc_activity"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/titleListTrips"
+        android:textSize="30dp"/>
+<FrameLayout
+    android:id="@+id/carb_calc_list_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    />
+</LinearLayout>

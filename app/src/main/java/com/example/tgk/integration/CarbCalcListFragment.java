@@ -24,6 +24,7 @@ public class CarbCalcListFragment extends ListFragment {
     public interface OnTripSelectedListener {
         /** Called by HeadlinesFragment when a list item is selected */
         public void onTripSelected(long id);
+        public void notifyListChanged();
     }
 
 
@@ -37,8 +38,7 @@ public class CarbCalcListFragment extends ListFragment {
         dbHelper = new CarbCalcDbAdapter(getActivity());
         dbHelper.open();
 
-       /* dbHelper.insertTrip("Busniness", "car", 2, "Monday",
-                "Fun", "Summary");*/
+
 
          displayListView();
         // connect to DB in background thread

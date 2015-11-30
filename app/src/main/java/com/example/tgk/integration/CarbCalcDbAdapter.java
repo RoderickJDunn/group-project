@@ -146,7 +146,7 @@ public class CarbCalcDbAdapter {
         mDb.delete(TABLE_NAME_TRIP, "_id = " + id, null);
     }
 
-    public boolean deleteAllArticles() {
+    public boolean deleteAllTrips() {
         int doneDelete = 0;
         doneDelete = mDb.delete(TABLE_NAME_TRIP, null , null);
         Log.w(TAG, Integer.toString(doneDelete));
