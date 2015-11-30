@@ -41,6 +41,9 @@ public class CarbCalculatorActivity extends ActionBarActivity
 
             Log.d("Check", "past transaction");
         }
+        else {
+
+        }
     }
 
 
@@ -107,6 +110,9 @@ public class CarbCalculatorActivity extends ActionBarActivity
     @Override
     public void onTripSelected(long id) {
         CarbCalcDetailFragment detailFragment = new CarbCalcDetailFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.carb_calc_list_frag, detailFragment).commit();
     }
 
     @Override

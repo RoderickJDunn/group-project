@@ -17,7 +17,7 @@ public class CarbCalcDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.carb_calc_detail, container, false);
