@@ -90,6 +90,5 @@ public class CarbCalcListFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
         mCallback.onTripSelected(id);
         getListView().setItemChecked(position, true);
-
     }
 }

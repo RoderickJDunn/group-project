@@ -16,11 +16,11 @@ public class CarbCalculatorActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.carb_calc_list);
+        setContentView(R.layout.carb_calc_activity);
 
         // Check whether the activity is using the layout version with
         // the fragment_container FrameLayout. If so, we must add the first fragment
-        if (findViewById(R.id.carb_calc_list_frag) != null) {
+        if (findViewById(R.id.carb_calc_activity) != null) {
 
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
@@ -35,7 +35,7 @@ public class CarbCalculatorActivity extends ActionBarActivity
           //  listFragment.setArguments(getIntent().getExtras());
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-            transaction.add(R.id.carb_calc_list_frag, listFragment).commit();
+            transaction.add(R.id.carb_calc_activity, listFragment).commit();
             // In case this activity was started with special instructions from an Intent,
             // pass the Intent's extras to the fragment as arguments
 
@@ -95,15 +95,20 @@ public class CarbCalculatorActivity extends ActionBarActivity
         // fragment transaction (input trip info)
         // Create new fragment and transaction
 
+        Fragment detailFrag = getFragmentManager().findFragmentById(R.id.details_add_pane);
+        if (detailFrag != null) {
 
-        Fragment addTripFrag = new CarbCalcAddTripFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        }
+        else {
+            Fragment addTripFrag = new CarbCalcAddTripFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.carb_calc_list_frag, addTripFrag);
-        transaction.addToBackStack(null);
+            transaction.replace(R.id.carb_calc_activity, addTripFrag);
+            transaction.addToBackStack(null);
 
 
-        transaction.commit();
+            transaction.commit();
+        }
 
     }
 
@@ -112,7 +117,7 @@ public class CarbCalculatorActivity extends ActionBarActivity
         CarbCalcDetailFragment detailFragment = new CarbCalcDetailFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.carb_calc_list_frag, detailFragment).commit();
+        transaction.replace(R.id.carb_calc_activity, detailFragment).commit();
     }
 
     @Override
@@ -123,6 +128,6 @@ public class CarbCalculatorActivity extends ActionBarActivity
         //  listFragment.setArguments(getIntent().getExtras());
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.carb_calc_list_frag, listFragment).commit();
+        transaction.replace(R.id.carb_calc_activity, listFragment).commit();
     }
 }
