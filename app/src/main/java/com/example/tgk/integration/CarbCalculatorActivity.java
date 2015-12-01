@@ -130,10 +130,26 @@ public class CarbCalculatorActivity extends ActionBarActivity
 
     @Override
     public void onTripSelected(long id) {
+        Bundle args = new Bundle();
+        args.putLong("Trip ID", id);
         CarbCalcDetailFragment detailFragment = new CarbCalcDetailFragment();
+        detailFragment.setArguments(args);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.carb_calc_activity, detailFragment).commit();
+        // get a reference to the details pane
+        Fragment currentDetailFrag = getFragmentManager().findFragmentById(R.id.details_add_pane);
+        // if the details pane is null, we're in a single-pane layout
+        if (currentDetailFrag == null) {
+            transaction.replace(R.id.carb_calc_list_view, detailFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+        else {
+            // in dual-pane layout
+            transaction.replace(R.id.details_add_pane, detailFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
     }
 
     @Override
@@ -147,7 +163,7 @@ public class CarbCalculatorActivity extends ActionBarActivity
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
             transaction.replace(R.id.details_add_pane, detailFragment).commit();
-            notifyListChanged();
+
             Intent intent = getIntent();
             startActivity(intent);
         }
@@ -162,7 +178,13 @@ public class CarbCalculatorActivity extends ActionBarActivity
     }
 
     @Override
-    public void notifyListChanged() {
-
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0 ){
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
+
+
 }

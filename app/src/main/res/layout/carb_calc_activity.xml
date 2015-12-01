@@ -6,15 +6,20 @@
     android:id="@+id/carb_calc_activity"
     android:orientation="vertical"
     >
-    <TextView
+   <!-- <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/listScreenTitle"
         android:text="@string/titleListTrips"
-        android:textSize="30dp"/>
-<FrameLayout
+        android:textSize="30dp"/>-->
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="30dp"/>-->
+    <FrameLayout
     android:id="@+id/carb_calc_list_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent">
 
-    />
+    </FrameLayout>
 </LinearLayout>

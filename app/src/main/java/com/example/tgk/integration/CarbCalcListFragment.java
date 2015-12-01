@@ -1,5 +1,6 @@
 package com.example.tgk.integration;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ListFragment;
@@ -10,7 +11,10 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * Created by Roderick on 2015-11-27.
@@ -24,7 +28,6 @@ public class CarbCalcListFragment extends ListFragment {
     public interface OnTripSelectedListener {
         /** Called by HeadlinesFragment when a list item is selected */
         public void onTripSelected(long id);
-        public void notifyListChanged();
     }
 
 
@@ -35,10 +38,18 @@ public class CarbCalcListFragment extends ListFragment {
        int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                 android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
 
-        dbHelper = new CarbCalcDbAdapter(getActivity());
+
+        dbHelper = new CarbCalcDbAdapter(CarbCalcListFragment.this.getActivity());
         dbHelper.open();
 
-
+        // how to add a header to list view? I tried to do it programatically here
+       /* TextView listHeader = new TextView(getActivity());
+        listHeader.setText("TRIPS MAN");
+        listHeader.setTextSize(20);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT, AbsListView.LayoutParams.WRAP_CONTENT);
+        listHeader.setLayoutParams(params);
+        LinearLayout listLayout = (LinearLayout) getActivity().findViewById(R.id.carb_calc_activity);
+        listLayout.addView(listHeader);*/
 
          displayListView();
         // connect to DB in background thread
@@ -89,6 +100,6 @@ public class CarbCalcListFragment extends ListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         mCallback.onTripSelected(id);
-        getListView().setItemChecked(position, true);
+       // getListView().setItemChecked(position, true);
     }
 }
