@@ -1,7 +1,9 @@
 package com.example.tgk.integration;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +11,10 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Roderick on 2015-11-29.
@@ -18,7 +22,12 @@ import android.widget.TextView;
 public class CarbCalcDetailFragment extends Fragment {
     CarbCalcDbAdapter dbHelper;
     SimpleCursorAdapter dataAdapter;
+    OnTapDeleteListener mCallback;
     long id=0;
+
+    public interface OnTapDeleteListener {
+        public void onTapDeleteButton(long id);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,7 +57,33 @@ public class CarbCalcDetailFragment extends Fragment {
             date.setText(dataAdapter.getString(5));
             TextView note = (TextView) detailView.findViewById(R.id.note_info);
             note.setText(dataAdapter.getString(6));
+
         }
+
+        Button deleteButton = (Button)detailView.findViewById(R.id.deleteButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CarbCalcDetailFragment.this.getActivity());
+                builder.setTitle("Delete this trip?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dbHelper.removeTrip(id);
+                        mCallback.onTapDeleteButton(id);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
+
+               // AlertDialog confirmDeleteDialog = builder.create();
+
+            }
+        });
         return detailView;
     }
 
@@ -58,8 +93,16 @@ public class CarbCalcDetailFragment extends Fragment {
         this.id = args.getLong("Trip ID");
     }
 
-    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception.
+        try {
+            mCallback = (OnTapDeleteListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnTapDoneListener");
+        }
     }
 }

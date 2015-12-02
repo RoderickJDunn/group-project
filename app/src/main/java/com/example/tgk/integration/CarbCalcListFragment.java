@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.ListFragment;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -42,7 +43,7 @@ public class CarbCalcListFragment extends ListFragment {
         dbHelper = new CarbCalcDbAdapter(CarbCalcListFragment.this.getActivity());
         dbHelper.open();
 
-        // how to add a header to list view? I tried to do it programatically here
+        // how to add a header to list view? I tried to do it programmatically here
        /* TextView listHeader = new TextView(getActivity());
         listHeader.setText("TRIPS MAN");
         listHeader.setTextSize(20);
@@ -51,35 +52,51 @@ public class CarbCalcListFragment extends ListFragment {
         LinearLayout listLayout = (LinearLayout) getActivity().findViewById(R.id.carb_calc_activity);
         listLayout.addView(listHeader);*/
 
+        // add a lot of rows to database
+        /* for (int i = 0; i<10000; i++) {
+            dbHelper.insertTrip("category" + i, "vehicle"+ i, i, i/10, "", "", "");
+        }*/
          displayListView();
         // connect to DB in background thread
     }
 
     private void displayListView() {
 
-        Cursor cursor = dbHelper.fetchAllTrips();
-        // The desired columns to be bound
-        String[] columns = new String[]{
-                CarbCalcDbAdapter.KEY_TRIP_ID,
-                CarbCalcDbAdapter.KEY_CATEGORY
-        };
+        new AsyncTask<Void, Void, Cursor>() {
 
-        // the XML defined views which the data will be bound to
-        int[] to = new int[]{
-                R.id.trip_id,
-                R.id.category
-        };
+            @Override
+            protected Cursor doInBackground(Void... params) {
+                Cursor cursor = dbHelper.fetchAllTrips();
+                return cursor;
+            }
 
-        // create the adapter using the cursor pointing to the desired data
-        //as well as the layout information
-        dataAdapter = new SimpleCursorAdapter(
-                getActivity(), R.layout.simple_text_view1,
-                cursor,
-                columns,
-                to,
-                0);
+            @Override
+            protected void onPostExecute(Cursor cursor) {
+                super.onPostExecute(cursor);
+                String[] columns = new String[]{
+                        CarbCalcDbAdapter.KEY_TRIP_ID,
+                        CarbCalcDbAdapter.KEY_CATEGORY
+                };
 
-        setListAdapter(dataAdapter);
+                // the XML defined views which the data will be bound to
+                int[] to = new int[]{
+                        R.id.trip_id,
+                        R.id.category
+                };
+
+                // create the adapter using the cursor pointing to the desired data
+                //as well as the layout information
+                dataAdapter = new SimpleCursorAdapter(
+                        getActivity(), R.layout.simple_text_view1,
+                        cursor,
+                        columns,
+                        to,
+                        0);
+
+                setListAdapter(dataAdapter);
+            }
+        }.execute();
+
     }
 
     @Override

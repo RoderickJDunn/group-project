@@ -11,7 +11,9 @@ import android.view.MenuItem;
 
 
 public class CarbCalculatorActivity extends ActionBarActivity
-        implements CarbCalcListFragment.OnTripSelectedListener, CarbCalcAddTripFragment.OnTapDoneListener{
+        implements CarbCalcListFragment.OnTripSelectedListener, CarbCalcAddTripFragment.OnTapDoneListener,
+        CarbCalcDetailFragment.OnTapDeleteListener
+    {
 
     public static final String TITLE = "CO2 Calculator";
 
@@ -22,6 +24,9 @@ public class CarbCalculatorActivity extends ActionBarActivity
         setTitle(TITLE);
         // Check whether the activity is using the layout version with
         // the fragment_container for small screens. If so, we must add the first fragment
+
+
+
         if (findViewById(R.id.carb_calc_activity) != null) {
 
             // However, if we're being restored from a previous state,
@@ -177,6 +182,27 @@ public class CarbCalculatorActivity extends ActionBarActivity
         }
     }
 
+
+    public void onTapDeleteButton(long id) {
+        Fragment listFragment = getFragmentManager().findFragmentById(R.id.list_pane);
+        if (listFragment != null) {
+            //in two-pane layout
+           /* CarbCalcDetailFragment detailFragment = new CarbCalcDetailFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.details_add_pane, detailFragment).commit();*/
+            Intent intent = getIntent();
+            startActivity(intent);
+        }
+        else {
+            //in single pane layout
+            CarbCalcListFragment newListFragment = new CarbCalcListFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.carb_calc_list_view, newListFragment).commit();
+
+        }
+
+    }
+
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0 ){
@@ -187,4 +213,5 @@ public class CarbCalculatorActivity extends ActionBarActivity
     }
 
 
-}
+
+    }
