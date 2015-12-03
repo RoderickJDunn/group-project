@@ -1,8 +1,8 @@
 package com.example.tgk.integration;
 
-
 import android.app.Activity;
 import android.app.Fragment;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.Editable;
@@ -15,11 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.text.DecimalFormat;
-import java.util.logging.SimpleFormatter;
 
 /**
  * Created by Roderick on 2015-11-27.
@@ -45,14 +40,12 @@ public class CarbCalcAddTripFragment extends Fragment {
 
         dbHelper = new CarbCalcDbAdapter(getActivity());
         dbHelper.open();
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View inputTripInfoView = inflater.inflate(R.layout.carb_calc_add_trip, container, false);
-
         registerListeners(inputTripInfoView);
         Spinner vehicleSpinner = (Spinner)inputTripInfoView.findViewById(R.id.vehicle_input);
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(
@@ -132,21 +125,29 @@ public class CarbCalcAddTripFragment extends Fragment {
     public void storeInDatabase() {
         // get text from each of the input fields in the AddTrip fragment view
 
-        String category = ((EditText)getActivity().findViewById(R.id.category_input)).getText().toString();
-        String vehicleType = ((Spinner)getActivity().findViewById(R.id.vehicle_input)).getSelectedItem().toString();
-        String distanceString = ((EditText)getActivity().findViewById(R.id.distance_input)).getText().toString();
-        String cO2String = ((TextView)getActivity().findViewById(R.id.carbon_field)).getText().toString();
-        double distance=0;
-        double co2Amount=0;
-        if (distanceString != null && !distanceString.trim().equals("")) {
-            distance = Double.parseDouble(distanceString);
-            co2Amount = Double.parseDouble(cO2String);
-        }
+        final String category = ((EditText)getActivity().findViewById(R.id.category_input)).getText().toString();
+        final String vehicleType = ((Spinner)getActivity().findViewById(R.id.vehicle_input)).getSelectedItem().toString();
+        final String distanceString = ((EditText)getActivity().findViewById(R.id.distance_input)).getText().toString();
+        final String cO2String = ((TextView)getActivity().findViewById(R.id.carbon_field)).getText().toString();
 
-        String date = ((EditText)getActivity().findViewById(R.id.date_input)).getText().toString();
-        String note = ((EditText)getActivity().findViewById(R.id.note_input)).getText().toString();
 
-        dbHelper.insertTrip(category, vehicleType, distance, co2Amount, date, note, "");
+        final String date = ((EditText)getActivity().findViewById(R.id.date_input)).getText().toString();
+        final String note = ((EditText)getActivity().findViewById(R.id.note_input)).getText().toString();
+
+        new AsyncTask<Void,Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                double distance=0;
+                double co2Amount=0;
+                if (distanceString != null && !distanceString.trim().equals("")) {
+                    distance = Double.parseDouble(distanceString);
+                    co2Amount = Double.parseDouble(cO2String);
+                }
+                dbHelper.insertTrip(category, vehicleType, distance, co2Amount, date, note, "");
+                return null;
+            }
+        }.execute();
 
         mCallback.onTapDone();
 

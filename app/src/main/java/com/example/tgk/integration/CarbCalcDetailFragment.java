@@ -6,15 +6,13 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 /**
  * Created by Roderick on 2015-11-29.
@@ -36,7 +34,6 @@ public class CarbCalcDetailFragment extends Fragment {
         dbHelper.open();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View detailView = inflater.inflate(R.layout.carb_calc_detail, container, false);
@@ -57,7 +54,6 @@ public class CarbCalcDetailFragment extends Fragment {
             date.setText(dataAdapter.getString(5));
             TextView note = (TextView) detailView.findViewById(R.id.note_info);
             note.setText(dataAdapter.getString(6));
-
         }
 
         Button deleteButton = (Button)detailView.findViewById(R.id.deleteButton);
@@ -79,10 +75,7 @@ public class CarbCalcDetailFragment extends Fragment {
 
                     }
                 }).show();
-
-               // AlertDialog confirmDeleteDialog = builder.create();
-
-            }
+        }
         });
         return detailView;
     }

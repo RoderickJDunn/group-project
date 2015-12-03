@@ -1,21 +1,14 @@
 package com.example.tgk.integration;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.ListFragment;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 /**
  * Created by Roderick on 2015-11-27.
@@ -31,7 +24,6 @@ public class CarbCalcListFragment extends ListFragment {
         public void onTripSelected(long id);
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +31,10 @@ public class CarbCalcListFragment extends ListFragment {
        int layout = Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
                 android.R.layout.simple_list_item_activated_1 : android.R.layout.simple_list_item_1;
 
-
         dbHelper = new CarbCalcDbAdapter(CarbCalcListFragment.this.getActivity());
         dbHelper.open();
 
-        // how to add a header to list view? I tried to do it programmatically here
+        // how do you add a header to list view? I tried to do it programmatically here, but its not workings
        /* TextView listHeader = new TextView(getActivity());
         listHeader.setText("TRIPS MAN");
         listHeader.setTextSize(20);
@@ -52,12 +43,12 @@ public class CarbCalcListFragment extends ListFragment {
         LinearLayout listLayout = (LinearLayout) getActivity().findViewById(R.id.carb_calc_activity);
         listLayout.addView(listHeader);*/
 
-        // add a lot of rows to database
+        // add a lot of rows to database for testing
         /* for (int i = 0; i<10000; i++) {
             dbHelper.insertTrip("category" + i, "vehicle"+ i, i, i/10, "", "", "");
         }*/
          displayListView();
-        // connect to DB in background thread
+
     }
 
     private void displayListView() {
@@ -66,6 +57,7 @@ public class CarbCalcListFragment extends ListFragment {
 
             @Override
             protected Cursor doInBackground(Void... params) {
+
                 Cursor cursor = dbHelper.fetchAllTrips();
                 return cursor;
             }
@@ -92,11 +84,9 @@ public class CarbCalcListFragment extends ListFragment {
                         columns,
                         to,
                         0);
-
                 setListAdapter(dataAdapter);
             }
         }.execute();
-
     }
 
     @Override

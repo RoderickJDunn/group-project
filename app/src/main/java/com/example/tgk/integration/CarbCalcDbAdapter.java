@@ -32,7 +32,6 @@ public class CarbCalcDbAdapter {
     public static final String KEY_NOTE = "Note";
     public static final String KEY_SUMMARY = "Summary";
 
-
     private static final String SQL_CREATE_TRIPS_DATABASE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_NAME_TRIP + " (" +
                     KEY_TRIP_ID + " INTEGER PRIMARY KEY autoincrement, " +
@@ -40,18 +39,8 @@ public class CarbCalcDbAdapter {
                     KEY_DISTANCE + REAL_TYPE + ", " + KEY_CO2 + REAL_TYPE + ", " + KEY_DATE + TEXT_TYPE + ", " +
                     KEY_NOTE + TEXT_TYPE + ", " + KEY_SUMMARY + TEXT_TYPE + " );";
 
-
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME_TRIP;
-
-
-
-    /*public static abstract class ArticleReaderContract implements BaseColumns {
-        public static final String TABLE_NAME = "Article";
-        *//*public static final String KEY_ARTICLE_ID = "_id";*//*
-        public static final String KEY_TITLE = "Title";
-        public static final String KEY_BODY = "Body";
-    }*/
 
     private class DatabaseHelper extends SQLiteOpenHelper {
         public DatabaseHelper(Context context) {
@@ -71,7 +60,6 @@ public class CarbCalcDbAdapter {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_TRIP);
             onCreate(db);
         }
-
     }
 
     public CarbCalcDbAdapter(Context ctx) {
@@ -152,7 +140,5 @@ public class CarbCalcDbAdapter {
         Log.w(TAG, Integer.toString(doneDelete));
         return doneDelete > 0;
     }
-
-
 
 }
