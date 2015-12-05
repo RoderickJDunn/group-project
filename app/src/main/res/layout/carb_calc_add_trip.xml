@@ -21,6 +21,7 @@
             >
             <TextView
                 android:text="Enter Trip Information"
+                android:id="@+id/add_edit_trip_header"
                 android:textSize="25dip"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
@@ -34,13 +35,27 @@
                 android:text="@string/done_button"
                 />
         </GridLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Category"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/category_input"
-            android:hint="Trip Category (eg. Business)"
+            android:hint="Eg) Business, Leisure..."
             style="@style/addTripStyle"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Vehicle Type"/>
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,11 +63,18 @@
             android:hint="Vehicle Type"
             style="@style/addTripStyle"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Distance (Miles)"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/distance_input"
-            android:hint="Distance (miles)"
+            android:hint=""
             android:inputType="numberDecimal"
             style="@style/addTripStyle"
             />
@@ -64,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:editable="false"
-                android:textSize="20dp"
+                android:textSize="14dp"
                 android:textStyle="italic"
                 android:text="CO2 (m-tons):"
                 android:layout_gravity="center_vertical"
@@ -80,18 +102,32 @@
                 android:backgroundTint="#a1c4f7"/>
 
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Date"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/date_input"
-            android:hint="Date"
+            android:hint=""
             style="@style/addTripStyle"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="Note"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/note_input"
-            android:hint="Note"
+            android:hint=""
             style="@style/addTripStyle"
             android:textAlignment="textStart"
             android:gravity="top|left"

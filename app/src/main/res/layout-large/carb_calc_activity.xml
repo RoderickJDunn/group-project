@@ -12,7 +12,7 @@
             android:text="@string/titleListTrips"
             android:textSize="30dp"/>-->
         <fragment
-            class="com.example.tgk.integration.CarbCalcListFragment"
+            class="com.example.tgk.groupProject.CarbCalcListFragment"
             android:id="@+id/list_pane"
             android:layout_width="0dp"
             android:layout_height="match_parent"

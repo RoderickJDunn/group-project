@@ -1,24 +1,23 @@
-package com.example.tgk.integration;
+package com.example.tgk.groupProject;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
-public class MainActivity4 extends ActionBarActivity {
+public class TipCalculatorActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_four);
+        setContentView(R.layout.activity_tip_calc);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        menu.add("Add Tip");
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -42,12 +41,14 @@ public class MainActivity4 extends ActionBarActivity {
                 go(MainActivity2.class);
                 break;
             case R.id.carb_calc:
+
                 go(CarbCalculatorActivity.class);
                 break;
             case R.id.contacts:
                 go(MainActivity4.class);
                 break;
         }
+
         return super.onOptionsItemSelected(item);
     }
     private void go(Class c){

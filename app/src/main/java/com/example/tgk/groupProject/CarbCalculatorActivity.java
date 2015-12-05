@@ -1,18 +1,19 @@
-package com.example.tgk.integration;
+package com.example.tgk.groupProject;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class CarbCalculatorActivity extends ActionBarActivity
         implements CarbCalcListFragment.OnTripSelectedListener, CarbCalcAddTripFragment.OnTapDoneListener,
-        CarbCalcDetailFragment.OnTapDeleteListener
+        CarbCalcDetailFragment.OnButtonListeners
     {
 
     public static final String TITLE = "CO2 Calculator";
@@ -22,9 +23,9 @@ public class CarbCalculatorActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.carb_calc_activity);
         setTitle(TITLE);
+
         // Check whether the activity is using the layout version with
         // the fragment_container for small screens. If so, we must add the first fragment
-
         if (findViewById(R.id.carb_calc_activity) != null) {
 
             // However, if we're being restored from a previous state,
@@ -48,8 +49,13 @@ public class CarbCalculatorActivity extends ActionBarActivity
         }
     }
 
-
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
+
+        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         menu.add(1, 5, 5, "Add Trip");
@@ -93,6 +99,7 @@ public class CarbCalculatorActivity extends ActionBarActivity
         // Create new fragment and transaction
 
         Fragment detailFrag = getFragmentManager().findFragmentById(R.id.details_add_pane);
+
         if (detailFrag != null) {
             Fragment addTripFrag = new CarbCalcAddTripFragment();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -107,7 +114,6 @@ public class CarbCalculatorActivity extends ActionBarActivity
             transaction.addToBackStack(null);
             transaction.commit();
         }
-
     }
 
     @Override
@@ -118,17 +124,18 @@ public class CarbCalculatorActivity extends ActionBarActivity
         detailFragment.setArguments(args);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        // get a reference to the details pane
-        Fragment currentDetailFrag = getFragmentManager().findFragmentById(R.id.details_add_pane);
-        // if the details pane is null, we're in a single-pane layout
-        if (currentDetailFrag == null) {
-            transaction.replace(R.id.carb_calc_list_view, detailFragment);
+        // get a reference to the details pane view
+        View detailsFrame = findViewById(R.id.details_add_pane);
+
+        if (detailsFrame != null && detailsFrame.getVisibility()==View.VISIBLE) {
+            // in dual-pane layout
+            transaction.replace(R.id.details_add_pane, detailFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         }
         else {
-            // in dual-pane layout
-            transaction.replace(R.id.details_add_pane, detailFragment);
+            // if the details pane is null, or not in current layout, we're in a single-pane layout
+            transaction.replace(R.id.carb_calc_list_view, detailFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         }
@@ -136,10 +143,11 @@ public class CarbCalculatorActivity extends ActionBarActivity
 
     @Override
     public void onTapDone() {
-        // Create an instance of ExampleFragment
-        Fragment listFragment = getFragmentManager().findFragmentById(R.id.list_pane);
 
-        if (listFragment != null) {
+        Fragment listFragment = getFragmentManager().findFragmentById(R.id.list_pane);
+        View listPane = findViewById(R.id.list_pane);
+
+        if (listFragment != null && listPane.getVisibility()==View.VISIBLE) {
             //in two-pane view
             CarbCalcDetailFragment detailFragment = new CarbCalcDetailFragment();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -157,9 +165,10 @@ public class CarbCalculatorActivity extends ActionBarActivity
     }
 
 
-    public void onTapDeleteButton(long id) {
+    public void onTapDeleteButton() {
         Fragment listFragment = getFragmentManager().findFragmentById(R.id.list_pane);
-        if (listFragment != null) {
+        View listPane = findViewById(R.id.list_pane);
+        if (listFragment != null && listPane.getVisibility()==View.VISIBLE) {
             //in two-pane layout
             Intent intent = getIntent();
             startActivity(intent);
@@ -173,6 +182,25 @@ public class CarbCalculatorActivity extends ActionBarActivity
     }
 
     @Override
+    public void onTapEditButton(Cursor cursor) {
+        CarbCalcAddTripFragment editFragment = new CarbCalcAddTripFragment();
+        editFragment.setCursor(cursor);
+        Fragment listFragment = getFragmentManager().findFragmentById(R.id.list_pane);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        View listPane = findViewById(R.id.list_pane);
+        if (listFragment != null && listPane.getVisibility()==View.VISIBLE) {
+            //in two-pane layout
+            transaction.replace(R.id.details_add_pane, editFragment);
+            transaction.addToBackStack(null).commit();
+        }
+        else {
+            // in single-pane layout
+            transaction.replace(R.id.carb_calc_list_view, editFragment);
+            transaction.addToBackStack(null).commit();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0 ){
             getFragmentManager().popBackStack();
@@ -180,6 +208,7 @@ public class CarbCalculatorActivity extends ActionBarActivity
             super.onBackPressed();
         }
     }
+
 
 
 

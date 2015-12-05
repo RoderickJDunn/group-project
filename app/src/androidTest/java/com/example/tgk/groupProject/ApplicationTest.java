@@ -1,4 +1,4 @@
-package com.example.tgk.integration;
+package com.example.tgk.groupProject;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

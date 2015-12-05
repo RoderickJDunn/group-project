@@ -1,4 +1,4 @@
-package com.example.tgk.integration;
+package com.example.tgk.groupProject;
 
 import android.content.Intent;
 import android.os.Bundle;

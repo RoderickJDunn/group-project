@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,7 +25,15 @@
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_columnSpan="2" />
-
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Summary"
+            android:id="@+id/summarybutton"
+            android:layout_alignParentRight="false"
+            android:layout_toStartOf="@+id/editbutton"
+            android:layout_toLeftOf="@+id/editbutton"/>
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
@@ -32,7 +41,8 @@
             android:text="Edit"
             android:id="@+id/editbutton"
             android:layout_alignParentRight="false"
-            android:layout_toStartOf="@+id/deleteButton" />
+            android:layout_toStartOf="@+id/deleteButton"
+            android:layout_toLeftOf="@+id/deleteButton"/>
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -82,6 +92,12 @@
         android:layout_height="wrap_content"
         />
 
+    <TextView
+        style="@style/tripDetailStyle"
+        android:text="Note:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     <TextView
         android:id="@+id/note_info"
         style="@style/tripDetailStyle"

@@ -1,4 +1,4 @@
-package com.example.tgk.integration;
+package com.example.tgk.groupProject;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -44,7 +44,7 @@ public class CarbCalcListFragment extends ListFragment {
         listLayout.addView(listHeader);*/
 
         // add a lot of rows to database for testing
-        /* for (int i = 0; i<10000; i++) {
+        /* for (int i = 0; i<1000; i++) {
             dbHelper.insertTrip("category" + i, "vehicle"+ i, i, i/10, "", "", "");
         }*/
          displayListView();
@@ -67,13 +67,15 @@ public class CarbCalcListFragment extends ListFragment {
                 super.onPostExecute(cursor);
                 String[] columns = new String[]{
                         CarbCalcDbAdapter.KEY_TRIP_ID,
-                        CarbCalcDbAdapter.KEY_CATEGORY
+                        CarbCalcDbAdapter.KEY_CATEGORY,
+                        CarbCalcDbAdapter.KEY_CO2
                 };
 
                 // the XML defined views which the data will be bound to
                 int[] to = new int[]{
                         R.id.trip_id,
-                        R.id.category
+                        R.id.category,
+                        R.id.carbonListView
                 };
 
                 // create the adapter using the cursor pointing to the desired data
