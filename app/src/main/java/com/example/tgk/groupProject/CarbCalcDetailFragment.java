@@ -120,7 +120,7 @@ public class CarbCalcDetailFragment extends Fragment {
 
             @Override
             protected void onPostExecute(Cursor cursorForCategory) {
-                super.onPostExecute(cursor);
+                super.onPostExecute(cursorForCategory);
                 double totalCarbon=0;
                 while (cursorForCategory.moveToNext()) {
                     totalCarbon+=cursorForCategory.getDouble(0);

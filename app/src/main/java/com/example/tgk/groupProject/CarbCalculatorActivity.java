@@ -59,6 +59,7 @@ public class CarbCalculatorActivity extends ActionBarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         menu.add(1, 5, 5, "Add Trip");
+        menu.add(1, 6, 5, "Instructions");
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -86,10 +87,16 @@ public class CarbCalculatorActivity extends ActionBarActivity
                 break;
             case 5:
                 openAddTrip();
+                break;
+            case 6:
+                openInstructions();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
-    private void go(Class c){
+
+
+        private void go(Class c){
         Intent intent = new Intent(this, c);
         startActivity(intent);
     }
@@ -101,6 +108,7 @@ public class CarbCalculatorActivity extends ActionBarActivity
         Fragment detailFrag = getFragmentManager().findFragmentById(R.id.details_add_pane);
 
         if (detailFrag != null) {
+            //two-pane
             Fragment addTripFrag = new CarbCalcAddTripFragment();
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.details_add_pane, addTripFrag);
@@ -114,6 +122,23 @@ public class CarbCalculatorActivity extends ActionBarActivity
             transaction.addToBackStack(null);
             transaction.commit();
         }
+    }
+
+    private void openInstructions() {
+        Fragment detailFrag = getFragmentManager().findFragmentById(R.id.details_add_pane);
+        if (detailFrag != null) {
+            // two-pane
+
+
+        }
+        else {
+            CarbCalcAboutFragment aboutFrag = new CarbCalcAboutFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.carb_calc_list_view, aboutFrag);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+
     }
 
     @Override

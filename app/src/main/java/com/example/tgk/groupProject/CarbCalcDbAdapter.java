@@ -148,9 +148,6 @@ public class CarbCalcDbAdapter {
         Cursor mCursor = mDb.query(TABLE_NAME_TRIP, new String[] {KEY_CO2}, selection,
                 null, null, null, null);
 
-        if (mCursor != null) {
-            mCursor.moveToFirst();
-        }
         return mCursor;
 
     }
