@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.example.tgk.groupProject.TipCalculatorActivity"
-            android:label="@string/app_name" >
+            android:label="Tip Calculator" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,11 +17,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.tgk.groupProject.MainActivity2"/>
+            android:name="com.example.tgk.groupProject.A2_MainActivity"/>
         <activity
             android:name="com.example.tgk.groupProject.CarbCalculatorActivity"/>
-        <activity
-            android:name="com.example.tgk.groupProject.MainActivity4"/>
+       <!-- <activity
+            android:name="com.example.tgk.groupProject.MainActivity4"/>-->
     </application>
 
 </manifest>

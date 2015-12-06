@@ -38,14 +38,14 @@ public class TipCalculatorActivity extends ActionBarActivity {
                 go(TipCalculatorActivity.class);
                 break;
             case R.id.time_track:
-                go(MainActivity2.class);
+                //go(MainActivity2.class);
                 break;
             case R.id.carb_calc:
 
                 go(CarbCalculatorActivity.class);
                 break;
             case R.id.contacts:
-                go(MainActivity4.class);
+               // go(MainActivity4.class);
                 break;
         }
 

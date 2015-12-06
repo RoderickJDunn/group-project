@@ -77,13 +77,13 @@ public class CarbCalculatorActivity extends ActionBarActivity
                 go(TipCalculatorActivity.class);
                 break;
             case R.id.time_track:
-                go(MainActivity2.class);
+                go(A2_MainActivity.class);
                 break;
             case R.id.carb_calc:
                 go(CarbCalculatorActivity.class);
                 break;
             case R.id.contacts:
-                go(MainActivity4.class);
+               // go(MainActivity4.class);
                 break;
             case 5:
                 openAddTrip();
